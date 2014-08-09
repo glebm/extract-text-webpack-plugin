@@ -89,7 +89,7 @@ ExtractTextPlugin.prototype.apply = function(compiler) {
 					if(meta) {
 						var wasExtracted = typeof meta.text === "string";
 						if(shouldExtract !== wasExtracted) {
-							module.meta[__dirname + "/extract"] = shouldExtract
+							module.meta[__dirname + "/extract"] = shouldExtract;
 							compilation.rebuildModule(module, function(err) {
 								if(err) {
 									compilation.errors.push(err);
@@ -112,7 +112,8 @@ ExtractTextPlugin.prototype.apply = function(compiler) {
 				}, function(err) {
 					if(err) return callback(err);
 					if(text.length > 0) {
-						var file = filename.replace(Template.REGEXP_NAME, chunk.name);
+            console.log('CHUNK', chunk);
+						var file = filename.replace(Template.REGEXP_NAME, chunk.name).replace(Template.REGEXP_HASH, chunk.hash);
 						texts[file] = (texts[file] || []).concat(text);
 					}
 					callback();
